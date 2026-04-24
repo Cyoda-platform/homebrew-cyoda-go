@@ -5,21 +5,21 @@
 class Cyoda < Formula
   desc "Lightweight Go EDBMS — digital twin of the Cyoda platform"
   homepage "https://github.com/cyoda-platform/cyoda-go"
-  version "0.6.1"
+  version "0.6.2"
   license "Apache-2.0"
 
   on_macos do
     if Hardware::CPU.intel?
-      url "https://github.com/Cyoda-platform/cyoda-go/releases/download/v0.6.1/cyoda_0.6.1_darwin_amd64.tar.gz"
-      sha256 "8eb41bf6106f16662a4854caa560e5d38faa63a8326e3e5846f3f8f52761d28c"
+      url "https://github.com/Cyoda-platform/cyoda-go/releases/download/v0.6.2/cyoda_0.6.2_darwin_amd64.tar.gz"
+      sha256 "4e0ea2c342a4beaf8f872c5f75adebc6a5dbf1ea7c691718edbb50aff3df3cca"
 
       define_method(:install) do
         bin.install "cyoda"
       end
     end
     if Hardware::CPU.arm?
-      url "https://github.com/Cyoda-platform/cyoda-go/releases/download/v0.6.1/cyoda_0.6.1_darwin_arm64.tar.gz"
-      sha256 "24277d0f548fe24bb09e7e8fabda16a7ba2dc29b6dd235f73d8c5ecd26752032"
+      url "https://github.com/Cyoda-platform/cyoda-go/releases/download/v0.6.2/cyoda_0.6.2_darwin_arm64.tar.gz"
+      sha256 "d6e760a70b97577a679757721254730e1e3095888eb9429a7c352ea1c45ff92b"
 
       define_method(:install) do
         bin.install "cyoda"
@@ -29,36 +29,34 @@ class Cyoda < Formula
 
   on_linux do
     if Hardware::CPU.intel? && Hardware::CPU.is_64_bit?
-      url "https://github.com/Cyoda-platform/cyoda-go/releases/download/v0.6.1/cyoda_0.6.1_linux_amd64.tar.gz"
-      sha256 "02b5b3ec471fa05f05c153644a58d6a0325b5257e53f4804f72e938ed4290bbb"
+      url "https://github.com/Cyoda-platform/cyoda-go/releases/download/v0.6.2/cyoda_0.6.2_linux_amd64.tar.gz"
+      sha256 "5faaa13eda301b8d6dea6c4586bcf2a0a115270ebec93c90720a5d4f9171e65e"
       define_method(:install) do
         bin.install "cyoda"
       end
     end
     if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
-      url "https://github.com/Cyoda-platform/cyoda-go/releases/download/v0.6.1/cyoda_0.6.1_linux_arm64.tar.gz"
-      sha256 "ef7e470f7a285f897413e37583fbda794708136c7d4d3ad3b3b25119dc6067c4"
+      url "https://github.com/Cyoda-platform/cyoda-go/releases/download/v0.6.2/cyoda_0.6.2_linux_arm64.tar.gz"
+      sha256 "2f058e10c2cae1de0a16b8f972bb905f1279317890b7e9f527d38977e177f409"
       define_method(:install) do
         bin.install "cyoda"
       end
     end
   end
 
-  def post_install
-    system bin/"cyoda", "init"
-  end
-
   def caveats
     <<~EOS
       ==============================================================
-      cyoda is configured to use sqlite with data stored in
-      #{Dir.home}/.local/share/cyoda/cyoda.db
+      cyoda is installed but not yet initialised. Run:
 
-      If you want to reconfigure, run:
-        cyoda init --force
+        cyoda init
 
-      Or set CYODA_STORAGE_BACKEND in your shell environment to
-      override the packaged default.
+      to write the default sqlite configuration to
+      #{Dir.home}/.config/cyoda/ with data stored in
+      #{Dir.home}/.local/share/cyoda/cyoda.db.
+
+      Alternatively, set CYODA_STORAGE_BACKEND and related env vars
+      in your shell environment to run without an on-disk config.
       ==============================================================
     EOS
   end
